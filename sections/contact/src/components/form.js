@@ -15,9 +15,19 @@ const Form = () => {
     e.preventDefault()
     updateStatus('PENDING')
 
-    setTimeout(() => {
-      updateStatus('SUCCESS')
-    }, 1500)
+    fetch('/api/contact', {
+      method: 'POST',
+      body: JSON.stringify(formData)
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+        updateStatus('SUCCESS')
+      })
+      .catch(err => {
+        console.log(err)
+        updateStatus('ERROR')
+      })
   }
 
   const onChange = e => {
